@@ -26,8 +26,9 @@ print(collection)
 def insert_test_doc():
     collection=test_db.test_collection
     test_document= {
-        "name" : "nithin",
-        "age"  : "30"
+        "firstname" : "nithin",
+        "age"  : "30",
+        "place" : "china"
     }
     insert_ID=collection.insert_one(test_document).inserted_id
     print(insert_ID)
@@ -42,7 +43,7 @@ collection=test_db.test_collection
 def create_document():
     firstname= ["one","two","three","four","five"]
     place= ["India","Japan","England","Nepal","USA",]
-    age= [1,2,3,4,5]
+    age= [11,21,38,54,59]
     docs=[]
 
     for firstname, age, place in zip(firstname, age, place):
@@ -54,7 +55,7 @@ def create_document():
 
 create_document()
 
-#search data in collections
+#search data in documents
 
 printer= pprint.PrettyPrinter()
     
@@ -62,3 +63,32 @@ def find_all_person():
     for person in collection.find():
         printer.pprint(person)
 find_all_person()
+
+def find_nithin():
+    nithin= collection.find_one({"name" : "nithin"})
+    printer.pprint(nithin)
+find_nithin()
+
+def count():
+    count= collection.count_documents(filter={})
+    print("Number of document ", count)
+count()
+
+def find_ranage_age(min_age, max_age):
+    query = {"$and" :[
+        {"age" : {"$gte": min_age}},
+        {"age" : {"$lte": max_age}}
+    ]
+    }
+    person= collection.find(query).sort("age")
+    for person in person:
+        printer.pprint(person)
+find_ranage_age(15, 40)
+
+def project_coloum():
+    coloum= {"_id": 0, "firstname": 1, "age": 1, "place" : 1}
+    person= collection.find({}, coloum)
+    for person in person:
+        printer.pprint(person)
+project_coloum()
+
