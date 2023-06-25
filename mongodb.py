@@ -37,18 +37,28 @@ insert_test_doc()
 #Insert multiple data to documents
 """ production =client.production
 person_collection=production.person_collection """
+
 collection=test_db.test_collection
 def create_document():
     firstname= ["one","two","three","four","five"]
+    place= ["India","Japan","England","Nepal","USA",]
     age= [1,2,3,4,5]
     docs=[]
 
-    for firstname, age in zip(firstname, age):
-        doc  = { "firstname" : firstname, "age": age}
+    for firstname, age, place in zip(firstname, age, place):
+        doc  = { "firstname" : firstname, "age": age, "place": place}
         docs.append(doc)
 
     collection.insert_many(docs)
     print(docs)
 
 create_document()
+
+#search data in collections
+
+printer= pprint.PrettyPrinter()
     
+def find_all_person():
+    for person in collection.find():
+        printer.pprint(person)
+find_all_person()
