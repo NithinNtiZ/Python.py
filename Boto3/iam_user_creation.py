@@ -14,7 +14,7 @@ def user_creation_with_policy(user_name):
     Team = input('Enter value for Team: ')
     ApprovedBy = input('Enter value for ApprovedBy: ')
 
-    policy_arn = "arn:aws:iam::081938466928:policy/sup-test-policy"
+    policy_arn = "arn:aws:iam::123456789:policy/test-policy"
     tags = [
         {'Key': 'CreatedBy', 'Value': CreateBy},
         {'Key': 'CreatedOn', 'Value': CreatedOn},
