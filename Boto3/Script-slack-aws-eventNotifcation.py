@@ -2,10 +2,18 @@ import requests
 
 def lambda_handler(event, context):
     # Extract variables from the event
-    user = event['detail']['userIdentity']['userName']
+    if event['detail']['userIdentity']['type'] == "IAMUser":
+        user = event['detail']['userIdentity']['userName']
+    else:
+        user = event['detail']['userIdentity']['principalId']
+
+    # More optimize line of code
+    # user = event['detail']['userIdentity']['userName'] if event['detail']['userIdentity']['type'] == "IAMUser" else event['detail']['userIdentity']['principalId']
+
+
+
     event_type = event['detail']['eventName']
     created_on = event['detail']['eventTime']
-
     # Your Slack webhook URL
     webhook_url = "https://hooks.slack.com/triggers/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"
 
